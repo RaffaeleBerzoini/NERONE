@@ -36,7 +36,6 @@ NERONE   # your WRK_DIR
     Vitis-AI /workspace > conda activate vitis-ai-tensorflow2
     (vitis-ai-tensorflow2) Vitis-AI /workspace > cd NERONE
     (vitis-ai-tensorflow2) chmod +x deploy.sh
-    (vitis-ai-tensorflow2) chmod +x deploy.sh
     (vitis-ai-tensorflow2) ./deploy.sh ZCU104 build/float_model/f_model.h5 32 build/calibration_dataset 500
     ```
 * Change the arguments to suit your needs in the last command
@@ -46,15 +45,15 @@ NERONE   # your WRK_DIR
 Set up the evaluation board as stated [here](https://github.com/Xilinx/DPU-PYNQ).
 
 
-Copy the `deployment_directory` directory to your board with `scp -r deployment_directory/ root@root@192.168.1.227:~/.` assuming that the target board IP address is 192.168.1.227 - adjust this as appropriate for your system.
+Copy the `deployment_directory` directory to your board with `scp -r deployment_directory/ root@192.168.1.227:~/.` assuming that the target board IP address is 192.168.1.227 - adjust this as appropriate for your system.
 
 You could also directly copy the folder to the board SD card 
 
-On the board execute open the `NeroneRidingPynq-Classification.ipynb` or the `NeroneRidingPynq-Segmentation.ipynb` for classification and segmentation, respectively and execute it. Your quantized and compile model is now executing on the FPGA!
+On the board open `NeroneRidingPynq-Classification.ipynb` or `NeroneRidingPynq-Segmentation.ipynb` for classification and segmentation, respectively, and execute it. Your quantized and compile model is now executing on the FPGA!
 
 ## Asjustment Options
 
-Please keep in mind that both in the `quantize.py` file and in the `.ipynb` files images are loaded based on our tests. You might want to change that. In all files you can proceed exactly as you did for training and inference on gpu/cpu.
+Please keep in mind that both in the `quantize.py` file and in the `.ipynb` files images are loaded and preprocessed based on our tests. You might want to change that. In all files you can proceed exactly as you did for training and inference on GPU/CPU without worrying about being working on an FPGA.
 
 ## Our models
 
@@ -73,7 +72,5 @@ If you find this repository useful, please use the following citation:
   journal={IEEE Journal of Biomedical and Health Informatics}, 
   title={NERONE: The Fast Way to Efficiently Execute Your Deep Learning Algorithm At the Edge}, 
   year={2023},
-  volume={},
-  number={},
   pages={1-9},
   doi={10.1109/JBHI.2023.3296142}}
