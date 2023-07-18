@@ -57,9 +57,9 @@ Please keep in mind that both in the `quantize.py` file and in the `.ipynb` file
 
 ## Our models
 
-In the folder `results` you can find float, quantized and compiled model (for the ZCU104) obtained and described in the associated publication.
+In the folder `results` you can find float, quantized and compiled models (for the ZCU104) obtained and described in the associated publication.
 
-Refer also to the [following repository](https://github.com/necst/SENECA). for a detailed description of one of the test cases.
+Refer also to the [following repository](https://github.com/necst/SENECA) for a detailed description of one of the test cases.
 
 <a id="paper_ref"></a>
 # Associated Publication
