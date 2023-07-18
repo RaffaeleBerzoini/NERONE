@@ -40,7 +40,7 @@ DIVIDER = '-----------------------------------------'
 
 
 
-def quant_model(float_model,quant_model,batchsize,image_directory,colormode,nr_images):
+def quant_model(float_model,quant_model,batchsize,image_directory,nr_images):
     '''
     Quantize the floating-point model
     Save to HDF5 file
@@ -56,19 +56,23 @@ def quant_model(float_model,quant_model,batchsize,image_directory,colormode,nr_i
     # get input dimensions of the floating-point model
     height = float_model.input_shape[1]
     width = float_model.input_shape[2]
+    colormode = "rgb"
 
     # build calibration dataset
-    print(image_directory)
     total_images = len([name for name in os.listdir(image_directory) if os.path.isfile(os.path.join(image_directory, name))])
-    print(total_images)
     split = nr_images/total_images
+    split = min(1.0, split)
     
     data_gen = ImageDataGenerator(validation_split=split)
+    
+    
     calibration_dataset = data_gen.flow_from_directory(directory=os.path.dirname(image_directory),
                                                        target_size=(height, width),
                                                        color_mode=colormode,
                                                        batch_size=batchsize,
                                                        subset='validation')
+    sys.stdout.write("\033[F")
+    # calibration_dataset = DataGen(batchsize, (height, width), image_directory, nr_images, colormode)
 
     # run quantization
     quantizer = vitis_quantize.VitisQuantizer(float_model)
@@ -84,12 +88,11 @@ def main():
 
     # construct the argument parser and parse the arguments
     ap = argparse.ArgumentParser()
-    ap.add_argument('-m', '--float_model',  type=str, default='build/float_model/f_model.h5', help='Full path of floating-point model. Default is build/float_model/k_model.h5')
-    ap.add_argument('-q', '--quant_model',  type=str, default='build/quant_model/q_model.h5', help='Full path of quantized model. Default is build/quant_model/q_model.h5')
-    ap.add_argument('-b', '--batchsize',    type=int, default=32, help='Batchsize for quantization. Default is 32')
-    ap.add_argument('-d', '--dataset',      type=str, default='build/calibration_dataset', help='Full path to folder containing TFRecord files. Default is build/tfrecords')
-    ap.add_argument('-n', '--nr_images',    type=int, default=500, help='Number of images for the calibration dataset, default is 500')
-    ap.add_argument('-c', '--colormode',    type=str, default="rgb", help='One of "grayscale", "rgb", "rgba". Default: "rgb". Whether the images will be converted to have 1, 3, or 4 channels.')
+    ap.add_argument('-m', '--float_model',  type=str, default='build/float_model/f_model.h5', help='Full path of floating-point model. Default is build/float_model/k_model.h5.')
+    ap.add_argument('-q', '--quant_model',  type=str, default='build/quant_model/q_model.h5', help='Full path of quantized model. Default is build/quant_model/q_model.h5.')
+    ap.add_argument('-b', '--batchsize',    type=int, default=32, help='Batchsize for quantization. Default is 32.')
+    ap.add_argument('-d', '--dataset',      type=str, default='build/calibration_dataset', help='Full path to folder containing TFRecord files. Default is build/tfrecords.')
+    ap.add_argument('-n', '--nr_images',    type=int, default=500, help='Number of images for the calibration dataset, default is 500.')
     args = ap.parse_args()  
 
     print('\n------------------------------------')
@@ -102,11 +105,10 @@ def main():
     print (' --batchsize    : ', args.batchsize)
     print (' --dataset      : ', args.dataset)
     print (' --nr_images    : ', args.nr_images)
-    print (' --colormode    : ', args.colormode)
     print('------------------------------------\n')
 
 
-    quant_model(args.float_model, args.quant_model, args.batchsize, args.dataset, args.colormode, args.nr_images)
+    quant_model(args.float_model, args.quant_model, args.batchsize, args.dataset, args.nr_images)
 
 
 if __name__ ==  "__main__":
