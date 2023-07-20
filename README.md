@@ -38,7 +38,7 @@ NERONE   # your WRK_DIR
     (vitis-ai-tensorflow2) chmod +x deploy.sh
     (vitis-ai-tensorflow2) ./deploy.sh ZCU104 build/float_model/f_model.h5 32 build/calibration_dataset 500
     ```
-* Change the arguments to suit your needs in the last command
+* Change the arguments to suit your needs in the last command: e.g., board, model, batch size, dataset, number of images
 
 ## Deployment on the evaluation edge board
 
