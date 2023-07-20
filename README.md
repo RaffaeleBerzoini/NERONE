@@ -40,7 +40,7 @@ NERONE   # your WRK_DIR
     ```
 * Change the arguments to suit your needs in the last command
 
-## Deployment on the evaluation board
+## Deployment on the evaluation edge board
 
 Set up the evaluation board as stated [here](https://github.com/Xilinx/DPU-PYNQ).
 
@@ -51,7 +51,7 @@ You could also directly copy the folder to the board SD card
 
 On the board open `NeroneRidingPynq-Classification.ipynb` or `NeroneRidingPynq-Segmentation.ipynb` for classification and segmentation, respectively, and execute it. Your quantized and compile model is now executing on the FPGA!
 
-## Asjustment Options
+## Adjustment Options
 
 Please keep in mind that both in the `quantize.py` file and in the `.ipynb` files images are loaded and preprocessed based on our tests. You might want to change that. In all files you can proceed exactly as you did for training and inference on GPU/CPU without worrying about being working on an FPGA.
 
