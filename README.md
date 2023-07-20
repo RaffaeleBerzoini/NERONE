@@ -17,7 +17,7 @@
   ```
 
 
-* Put your image into the working directory. You should have something like this:
+* Put your calibration dataset into the working directory. You should have something like this:
 
 ```text
 NERONE   # your WRK_DIR
