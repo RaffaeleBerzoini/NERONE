@@ -8,7 +8,12 @@ __pycache__/
 
 # Distribution / packaging
 .Python
-build/
+build/calibration_dataset/
+build/float_model/
+build/quant_model/
+!build/.gitkeep
+deployment_directory/
+xmodel/
 develop-eggs/
 dist/
 downloads/
